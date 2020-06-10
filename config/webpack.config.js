@@ -2,28 +2,15 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin'); // 清除dist文
 const HtmlWebpackPlugin = require('html-webpack-plugin'); // 生成创建HTML入口
 const WebpackBar = require('webpackbar'); // webpack进度条
 const FriendsErrorsPlugins = require('friendly-errors-webpack-plugin'); // 控制台输出（更加友好）
-// const WebpackBuildNotifierPlugin = require('webpack-build-notifier'); // 构建通知
 const CopyWebpackPlugin = require('copy-webpack-plugin'); // 拷贝文件
-const { loader: MiniCssExtractLoader } = require('mini-css-extract-plugin');
+const webpack = require('webpack');
 
 const paths = require('./path');
-const { __DEV__} = require('./env.js');
+const { __IS_DEV__, readEnv} = require('./env.js');
+const { htmlMinifierOptions, getCssLoaders } = require('./util.js');
 
-const htmlMinifierOptions = {
-  collapseWhitespace: true,
-  collapseBooleanAttributes: true,
-  collapseInlineTagWhitespace: true,
-  removeComments: true,
-  removeRedundantAttributes: true,
-  removeScriptTypeAttributes: true,
-  removeStyleLineTypeAttributes: true,
-  minifyCss: true,
-  minifyJs: true,
-  minifyURLs: true,
-  useShortDoctype: true,
-  removeAttributeQuotes: true, // 删除双引号
-  collapseWhitespace: true // 压缩成一行
-}
+const envFileUrl = __IS_DEV__ ? 'appENV_development' : 'appENV_production';
+const env = readEnv(paths[envFileUrl]);
 
 module.exports = {
   // webpack入口文件  默认查找src/index
@@ -118,7 +105,7 @@ module.exports = {
       // 模块文件名
       filename: 'index.html',
       // 只在生产环境压缩
-      minify: __DEV__ ? false : htmlMinifierOptions,
+      minify: __IS_DEV__ ? false : htmlMinifierOptions,
       hash: true,
       // 制定webpack打包的js css静态资源插入到html的位置，true为body底部,false为head中
       inject: true,
@@ -151,24 +138,12 @@ module.exports = {
           to: paths.appBuild // 路径相对webpack配置的output路径
         }
       ]
-    })
-  ]
-}
-
-function getCssLoaders (importLoaders) {
-  return [
-    // MiniCssExtractLoader 和 style-loader 不能共存，分开使用 
-    __DEV__ ? 'style-loader' : MiniCssExtractLoader,
-    {
-      loader: 'css-loader',
-      options: {
-        modules: false,
-        sourceMap: true,
-        importLoaders
+    }),
+    new webpack.DefinePlugin({
+      // 定义环境和变量
+      'process.env': { 
+        ...env
       }
-    },
-    // {
-    //   loader: 'postcss-loader
-    // }
+    })
   ]
 }

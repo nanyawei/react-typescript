@@ -11,5 +11,7 @@ module.exports = {
   outPutpublicPath: '/',
   appPublic: resolvePath('public'),
   tsConfigPath: resolvePath('./tsconfig.json'),
-  hmrPath: '/__webpack_hmr'
+  hmrPath: '/__webpack_hmr',
+  appENV_development: resolvePath('.env.development'),
+  appENV_production: resolvePath('.env.production'),
 }

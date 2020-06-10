@@ -13,9 +13,9 @@ const webpackHotMiddleware = require('webpack-hot-middleware');
 
 const devConfig = require('../config/webpack.dev.config');
 const paths = require('../config/path.js');
-const { HOST, PORTLIST } = require('../config/env.js');
-
 const proxy = require('./proxy.js');
+
+const { WEBPACK_HOST = 'localhost', WEBPACK_PORT = 8000 } = process.env;
 
 function openBrowser(compiler, address) {
   if (argv.open) {
@@ -63,9 +63,10 @@ function setUpMiddlewares(compiler, server) {
 }
 
 async function start() {
+
   // 4个备选端口，都被占用会使用随机端口
-  const PORT = await getPort({ port: PORTLIST });
-  const address = `http://${HOST}:${PORT}`;
+  const PORT = await getPort({ port: [ WEBPACK_PORT ] });
+  const address = `http://${WEBPACK_HOST}:${PORT}`;
 
   // 加载 webpack 配置
   const compiler = webpack(devConfig);
@@ -74,7 +75,7 @@ async function start() {
   const devServer = express();
   setUpMiddlewares(compiler, devServer);
 
-  const httpServer = devServer.listen(PORT, HOST, err => {
+  const httpServer = devServer.listen(PORT, WEBPACK_HOST, err => {
     if (err) {
       console.log(err);
       return;
