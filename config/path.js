@@ -14,4 +14,6 @@ module.exports = {
   hmrPath: '/__webpack_hmr',
   appENV_development: resolvePath('.env.development'),
   appENV_production: resolvePath('.env.production'),
+
+  resolvePath
 }
