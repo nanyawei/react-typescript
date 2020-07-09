@@ -6,7 +6,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin'); // 拷贝文件
 const webpack = require('webpack');
 
 const paths = require('./path');
-const { __IS_DEV__, readEnv} = require('./env.js');
+const { __IS_DEV__, readEnv } = require('./env.js');
 const { htmlMinifierOptions, getCssLoaders } = require('./util.js');
 
 const envFileUrl = __IS_DEV__ ? 'appENV_development' : 'appENV_production';
@@ -41,19 +41,20 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: getCssLoaders(1)
+        use: getCssLoaders()
       },
       {
         test: /.less$/,
         use: [
-          ...getCssLoaders(2),
-          {
-            // 先让less-loader将less转换为less,再交给css-loader处理
-            loader: 'less-loader',
-            options: {
-              sourceMap: true
+          ...getCssLoaders(
+            {
+              // 先让less-loader将less转换为less,再交给css-loader处理
+              loader: 'less-loader',
+              options: {
+                sourceMap: true
+              }
             }
-          }
+          ),
         ]
       },
       {
@@ -110,7 +111,7 @@ module.exports = {
       // 制定webpack打包的js css静态资源插入到html的位置，true为body底部,false为head中
       inject: true,
       templateParameters: (...args) => {
-        const [ compilation, assets, assetTags, options ] = args;
+        const [compilation, assets, assetTags, options] = args;
         const rawPublicPath = paths.outPutpublicPath;
         return {
           compilation,
@@ -141,7 +142,7 @@ module.exports = {
     }),
     new webpack.DefinePlugin({
       // 定义环境和变量
-      'process.env': { 
+      'process.env': {
         ...env
       }
     })

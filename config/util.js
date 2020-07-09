@@ -1,5 +1,6 @@
 const { loader: MiniCssExtractLoader } = require('mini-css-extract-plugin');
 const { __IS_DEV__ } = require('./env.js');
+const { resolvePath } = require('./path.js');
 
 const htmlMinifierOptions = {
   collapseWhitespace: true,
@@ -17,21 +18,32 @@ const htmlMinifierOptions = {
   collapseWhitespace: true // 压缩成一行
 }
 
-function getCssLoaders (importLoaders) {
+function getCssLoaders (...args) {
+  const importLoaders = 2 + (args.length || 0);
+
   return [
     // MiniCssExtractLoader 和 style-loader 不能共存，分开使用 
     __IS_DEV__ ? 'style-loader' : MiniCssExtractLoader,
     {
       loader: 'css-loader',
       options: {
-        modules: false,
+        modules: true,
         sourceMap: true,
         importLoaders
       }
     },
-    // {
-    //   loader: 'postcss-loader
-    // }
+    {
+      loader: 'postcss-loader'
+    },
+    ...args,
+    {
+      loader: 'style-resources-loader',
+      options: {
+        patterns: [
+          resolvePath('src/styles/index.less')
+        ]
+      }
+    }
   ]
 }
 
