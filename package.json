@@ -16,11 +16,6 @@
     "commit": "git-cz",
     "release": "standard-version"
   },
-  "config": {
-    "commitizen": {
-      "path": "node_modules/cz-customizable"
-    }
-  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
@@ -127,6 +122,11 @@
     "webpack-hot-middleware": "^2.25.0",
     "webpack-merge": "^4.2.2",
     "webpackbar": "^4.0.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-customizable"
+    }
   },
   "sideEffects": false
 }
