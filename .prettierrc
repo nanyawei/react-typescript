@@ -1,16 +1,8 @@
 {
-  "trailingComma": "all",
+  "eslintIntegration": true,
+  "stylelintIntegration": true,
   "tabWidth": 2,
+  "sigleQuote": true,
   "semi": true,
-  "singleQuote": true,
-  "endOfLine": "auto",
-  "printWidth": 100,
-  "overrides": [
-    {
-      "fields": "*.md",
-      "options": {
-        "tabWidth": 2
-      }
-    }
-  ]
+  "bracketSpacing": true
 }
