@@ -9,8 +9,8 @@
     "build": "cross-env-shell NODE_ENV=production node ./scripts/build.js",
     "stylelint": "npx stylelint src/**/*.css src/**/*.less",
     "stylelint:fix": "npx stylelint src/**/*.css src/**/*.less --fix",
-    "lint": "run-p tslint stylelint",
-    "lint:fix": "run-p tslint:fix stylelint:fix",
+    "lint": "run-p eslint stylelint",
+    "lint:fix": "run-p eslint:fix stylelint:fix",
     "commit": "git-cz",
     "release": "standard-version"
   },
@@ -31,7 +31,8 @@
       "git add"
     ],
     "src/**/*.{ts,tsx}": [
-      "prettier --write",
+      "npm run eslint:fix",
+      "prettier --parser typescript --write",
       "git add"
     ]
   },
