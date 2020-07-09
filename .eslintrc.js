@@ -22,9 +22,9 @@ module.exports = {
   ],
   rules: {
     'react/jsx-filename-extension': [
-      2,
+      1,
       {
-        'extensions': ['js', 'jsx', 'ts', 'tsx']
+        'extensions': ['.ts', '.tsx']
       }
     ]
   }
