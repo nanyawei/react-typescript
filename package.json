@@ -7,6 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "cross-env-shell NODE_ENV=development node ./scripts/start.js",
     "build": "cross-env-shell NODE_ENV=production node ./scripts/build.js",
+    "eslint": "npx eslint ./src/**/*.tsx --force",
+    "eslint:fix": "npx eslint ./src/**/*.tsx --fix",
     "stylelint": "npx stylelint src/**/*.css src/**/*.less",
     "stylelint:fix": "npx stylelint src/**/*.css src/**/*.less --fix",
     "lint": "run-p eslint stylelint",
