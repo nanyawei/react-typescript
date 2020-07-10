@@ -6,7 +6,7 @@ module.exports = {
     'plugin:jsx-a11y/recommended',
     'prettier',
     'prettier/@typescript-eslint',
-    'reqct-app',
+    'react-app',
     // 'airbnb'
   ],
   plugins: [
