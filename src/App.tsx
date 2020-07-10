@@ -1,10 +1,9 @@
 import React from "react";
 import { hot } from "react-hot-loader/root";
-import Test from "./page/test";
+import A from "./page/A";
+import B from "./page/B";
 
 const App = React.memo(() => {
-  console.log(process.env);
-
   return (
     <div>
       {process.env.NODE_ENV}
@@ -14,7 +13,8 @@ const App = React.memo(() => {
       hello ts
       <br />
       hello react
-      <Test />
+      <A />
+      <B />
     </div>
   );
 });
